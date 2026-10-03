@@ -23,9 +23,23 @@ from fastmcp import FastMCP
 from fastmcp.utilities import logging as fastmcp_logger
 
 from colab_mcp.session import ColabSessionProxy
+from colab_mcp.qcaf_notebook import (
+    QCAFNotebookMaterializeRequest,
+    QCAFNotebookMaterializeResult,
+    materialize_qcaf_notebook,
+)
 
 
 mcp = FastMCP(name="ColabMCP")
+
+
+@mcp.tool()
+def materialize_qcaf_colab_notebook(
+    request: QCAFNotebookMaterializeRequest,
+) -> QCAFNotebookMaterializeResult:
+    """Persist a validated QCAF notebook JSON payload as a local .ipynb file."""
+    return materialize_qcaf_notebook(request)
+
 
 
 def init_logger(logdir):
